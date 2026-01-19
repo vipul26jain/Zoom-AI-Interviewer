@@ -867,9 +867,7 @@ import json
 import re
 import requests
 
-const API_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:5000' 
-    : 'https://zoom-ai-interviewer-production.up.railway.app';
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://zoom-ai-interviewer-production.up.railway.app';
 
 load_dotenv()
 app = Flask(__name__)
