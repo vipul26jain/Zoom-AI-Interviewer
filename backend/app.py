@@ -867,9 +867,13 @@ import json
 import re
 import requests
 
+const API_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:5000' 
+    : 'https://zoom-ai-interviewer-production.up.railway.app';
+
 load_dotenv()
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000", "http://localhost:5000", "http://127.0.0.1:5500", "https://zoom-ai-interviewer-production.up.railway.app/", "https://zoom-ai-interviewer-production.up.railway.app/generate-questions"])
+CORS(app, origins=["http://localhost:3000", "{API_URL}", "http://127.0.0.1:5500", "https://zoom-ai-interviewer-production.up.railway.app/", "https://zoom-ai-interviewer-production.up.railway.app/generate-questions"])
 
 # 🔥 ULTIMATE CORS CONFIGURATION
 CORS(app, resources={r"/*": {
@@ -1057,7 +1061,7 @@ def create_interview():
     print(f"🎤 Interview {interview_id} created!")
     return jsonify({
         "interviewId": interview_id,
-        "joinUrl": f"http://localhost:5000/interview/{interview_id}"
+        "joinUrl": f"{API_URL}/interview/{interview_id}"
     })
 
 # @app.route('/interview/<interview_id>')
@@ -1265,7 +1269,7 @@ def ai_interview_room(interview_id):
 def create_zoom_meeting(interview_id, candidate_name):
     """Create Zoom meeting for interview"""
     if not ZOOM_API_KEY or not ZOOM_API_SECRET:
-        return {"meetingId": "fake-123-456-789", "joinUrl": f"http://localhost:5000/zoom-fake/{interview_id}"}
+        return {"meetingId": "fake-123-456-789", "joinUrl": f"{API_URL}/zoom-fake/{interview_id}"}
     
     url = "https://api.zoom.us/v2/users/me/meetings"
     headers = {
@@ -1563,7 +1567,7 @@ def tts_question(qid):
 
 
 if __name__ == '__main__':
-    print("🚀 Backend running on http://localhost:5000")
+    print("🚀 Backend running on {API_URL}")
     app.run(port=5000, debug=True)
 
 @app.route('/debug')
