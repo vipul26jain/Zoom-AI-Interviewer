@@ -944,19 +944,29 @@ def safe_groq_call(prompt, max_retries=2):
     
     return None
 
-# Serve React app
+# Safe imports with fallbacks
+try:
+    from openai import OpenAI
+    HAS_OPENAI = True
+except:
+    HAS_OPENAI = False
+
+@app.route('/api/health')
+def health():
+    return jsonify({
+        "status": "Zoom AI Interviewer LIVE ✅",
+        "openai": HAS_OPENAI,
+        "port": os.getenv('PORT', 5000)
+    })
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_react(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
-
-# Your AI Interviewer API routes
-@app.route('/api/health')
-def health():
-    return jsonify({"status": "Zoom AI Interviewer LIVE!"})
+    """Serve React app - handles all frontend routes"""
+    static_path = app.static_folder
+    if path != "" and os.path.exists(os.path.join(static_path, path)):
+        return send_from_directory(static_path, path)
+    return send_from_directory(static_path, 'index.html')
 
 @app.route('/api/generate-questions', methods=['POST', 'OPTIONS'])
 def generate_questions():
