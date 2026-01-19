@@ -897,7 +897,7 @@ client = OpenAI(api_key=os.getenv("GROQ_API_KEY"), base_url="https://api.groq.co
 active_interviews = {}
 
 def safe_groq_call(prompt, max_retries=2):
-    """✅ BULLETPROOF Groq API call with ALL error handling"""
+    print("""✅ BULLETPROOF Groq API call with ALL error handling""")
     if not client:
         return None
     
@@ -989,8 +989,8 @@ Resume: {resume_text or 'None'}
 Generate 6 targeted interview questions. Return ONLY JSON."""
     
     questions = safe_groq_call(prompt)
-    
-    if questions:
+    print("AI questions : {questions}")
+    if questions: 
         print(f"✅ Generated {len(questions)} AI questions")
         return jsonify({"questions": questions})
     
