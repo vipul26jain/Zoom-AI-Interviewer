@@ -1057,7 +1057,7 @@ def create_interview():
     print(f"🎤 Interview {interview_id} created!")
     return jsonify({
         "interviewId": interview_id,
-        "joinUrl": f"http://localhost:5000/interview/{interview_id}"
+        "joinUrl": f"/interview/{interview_id}"
     })
 
 # @app.route('/interview/<interview_id>')
@@ -1265,7 +1265,7 @@ def ai_interview_room(interview_id):
 def create_zoom_meeting(interview_id, candidate_name):
     """Create Zoom meeting for interview"""
     if not ZOOM_API_KEY or not ZOOM_API_SECRET:
-        return {"meetingId": "fake-123-456-789", "joinUrl": f"http://localhost:5000/zoom-fake/{interview_id}"}
+        return {"meetingId": "fake-123-456-789", "joinUrl": f"/zoom-fake/{interview_id}"}
     
     url = "https://api.zoom.us/v2/users/me/meetings"
     headers = {
