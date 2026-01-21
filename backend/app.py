@@ -898,6 +898,7 @@ active_interviews = {}
 
 def safe_groq_call(prompt, max_retries=2):
     print("""✅ BULLETPROOF Groq API call with ALL error handling""")
+    print(f"Client : {client}")
     if not client:
         return None
     
