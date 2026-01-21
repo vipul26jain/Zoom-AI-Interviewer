@@ -756,27 +756,27 @@
 #                 audio.src=`/api/tts-question/1?text=`+encodeURIComponent(q);
 #             }}
             
-            document.getElementById('recordBtn').onclick=() => {{
-                const mime=MediaRecorder.isTypeSupported('audio/webm')?'audio/webm':'audio/mp4';
-                recorder=new MediaRecorder(stream,{{mimeType:mime}});
-                chunks=[];
-                recorder.ondataavailable=e=>chunks.push(e.data);
-                recorder.onstop=upload;
-                recorder.start(1000);
+            # document.getElementById('recordBtn').onclick=() => {{
+            #     const mime=MediaRecorder.isTypeSupported('audio/webm')?'audio/webm':'audio/mp4';
+            #     recorder=new MediaRecorder(stream,{{mimeType:mime}});
+            #     chunks=[];
+            #     recorder.ondataavailable=e=>chunks.push(e.data);
+            #     recorder.onstop=upload;
+            #     recorder.start(1000);
                 
-                document.getElementById('recordBtn').disabled=true;
-                document.getElementById('recordBtn').classList.add('recording');
-                document.getElementById('status').textContent='🔴 Recording (2:00)';
-                document.getElementById('status').className='status recording';
+            #     document.getElementById('recordBtn').disabled=true;
+            #     document.getElementById('recordBtn').classList.add('recording');
+            #     document.getElementById('status').textContent='🔴 Recording (2:00)';
+            #     document.getElementById('status').className='status recording';
                 
-                let time=120;
-                const timer=setInterval(() => {{
-                    time--;
-                    const m=Math.floor(time/60),s=time%60;
-                    document.getElementById('status').textContent='🔴 Recording (${m}:${s.toString().padStart(2,'0')})';
-                    if(time<=0){{clearInterval(timer);recorder.stop();}}
-                }},1000);
-            }};
+            #     let time=120;
+            #     const timer=setInterval(() => {{
+            #         time--;
+            #         const m=Math.floor(time/60),s=time%60;
+            #         document.getElementById('status').textContent='🔴 Recording (${m}:${s.toString().padStart(2,'0')})';
+            #         if(time<=0){{clearInterval(timer);recorder.stop();}}
+            #     }},1000);
+            # }};
             
 #             function upload() {{
 #                 const blob=new Blob(chunks,{{type:'audio/webm'}});
