@@ -989,7 +989,7 @@ Resume: {resume_text or 'None'}
 Generate 6 targeted interview questions. Return ONLY JSON."""
     
     questions = safe_groq_call(prompt)
-    print("AI questions : {questions}")
+    print(f"AI questions : {questions}")
     if questions: 
         print(f"✅ Generated {len(questions)} AI questions")
         return jsonify({"questions": questions})
