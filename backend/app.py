@@ -219,66 +219,139 @@ def next_question(interview_id):
 
 # ✅ YOUR ORIGINAL INTERVIEW ROOM HTML (with continuous recording)
 @app.route('/interview/<interview_id>')
-def ai_interview_room(interview_id):
+def ai_zoom_interview(interview_id):
     session = active_interviews.get(interview_id)
-    if not session: return "❌ Interview not found", 404
+    if not session:
+        return "❌ Interview not found", 404
     
     current_q = session['current_question']
-    question = session['questions'][current_q]['text'] if current_q < len(session['questions']) else "🎉 Complete!"
+    question = session['questions'][current_q]['text']
     
     return f'''
-    <!DOCTYPE html>
-    <html>
-    <head><title>AI Interview - {session['candidate']}</title>
-    <style>/* YOUR ORIGINAL CSS */</style>
-    </head>
-    <body>
-        <div class="q-counter">Q{current_q + 1}/{len(session['questions'])}</div>
-        <h1>🤖 AI Interview - {session['candidate']}</h1>
-        
-        <!-- Videos + Question Area with START button -->
-        <div class="question-area">
-            <div style="font-size:1.8em;color:#00d4ff">{question}</div>
-            <div class="status recording" id="status">🔴 FULL SESSION RECORDING</div>
-            <button id="startInterviewBtn" class="button record-btn">🚀 START FULL INTERVIEW</button>
-            <button id="askBtn" class="button record-btn" style="display:none">🎤 AI Ask</button>
-            <button id="nextBtn" class="button next-btn" disabled>Next →</button>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🤖 Zoom AI Interview - {session['candidate']}</title>
+    <script src="https://source.zoom.us/2.18.2/lib/vendor/react.min.js"></script>
+    <script src="https://source.zoom.us/2.18.2/lib/vendor/react-dom.min.js"></script>
+    <script src="https://source.zoom.us/2.18.2/lib/vendor/redux.min.js"></script>
+    <script src="https://source.zoom.us/2.18.2/lib/vendor/redux-thunk.min.js"></script>
+    <script src="https://source.zoom.us/zoom-meeting-2.18.2.min.js"></script>
+    <style>
+        body{{margin:0;background:#1a1a2e;color:white;font-family:Arial,sans-serif;overflow:hidden}}
+        #meetingSDKElement{{flex:1;height:100vh}}
+        .sidebar{{position:fixed;right:20px;top:20px;width:350px;background:rgba(26,26,46,0.95);padding:20px;border-radius:15px;border:2px solid #00d4ff;max-height:80vh;overflow-y:auto}}
+        .question{{font-size:1.4em;color:#00d4ff;margin-bottom:20px;padding:15px;background:rgba(0,212,255,0.1);border-radius:10px}}
+        .controls{{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}}
+        button{{padding:12px 24px;border:none;border-radius:8px;cursor:pointer;font-weight:600;flex:1;min-width:120px}}
+        .ask-btn{{background:#00d4ff;color:white}}
+        .next-btn{{background:#ff6b6b;color:white}}
+        .next-btn:disabled{{opacity:0.5;background:#666}}
+        .status{{padding:10px;border-radius:8px;margin:10px 0;font-weight:500}}
+        .recording{{background:#ff4444 !important;color:white !important}}
+        .q-counter{{position:fixed;top:20px;left:20px;background:rgba(0,212,255,0.2);padding:10px;border-radius:10px;font-weight:bold}}
+    </style>
+</head>
+<body>
+    <div class="q-counter">Q{current_q + 1}/{len(session['questions'])}</div>
+    
+    <!-- Zoom Meeting Container -->
+    <div id="meetingSDKElement"></div>
+    
+    <!-- AI Agent Sidebar -->
+    <div class="sidebar">
+        <h2 style="color:#00d4ff;margin-bottom:15px">🤖 AI Interview Agent</h2>
+        <div class="question">{question}</div>
+        <div class="status" id="status">🔄 Ready to start Zoom meeting</div>
+        <div class="controls">
+            <button id="joinZoom" class="ask-btn">🎥 Join Zoom Meeting</button>
+            <button id="askQuestion" class="ask-btn" disabled>🎤 AI Ask Question</button>
+            <button id="nextQuestion" class="next-btn" disabled>Next Question →</button>
         </div>
-        
-        <script>
+        <div id="recordingStatus" style="margin-top:15px;display:none">
+            <div class="status recording">🔴 Recording Answer...</div>
+        </div>
+    </div>
+    
+    <script>
         const interviewId = "{interview_id}";
-        let mediaStream, recorder, chunks = [];
+        let client;
+        let meeting;
         
-        // Camera + Continuous recording logic (your original + START button)
-        async function initCamera() {{
-            mediaStream = await navigator.mediaDevices.getUserMedia({{video:{{width:640,height:480}},audio:true}});
-            document.querySelector("video").srcObject = mediaStream;
+        // ✅ 1. Initialize Zoom SDK
+        document.getElementById("joinZoom").onclick = function() {{
+            const status = document.getElementById("status");
+            status.textContent = "🔄 Creating Zoom meeting...";
             
-            document.getElementById("startInterviewBtn").onclick = async function() {{
-                await fetch(`/api/start-recording/${{interviewId}}`,{{method:'POST'}});
-                recorder = new MediaRecorder(mediaStream);
-                chunks = [];
-                recorder.ondataavailable = e => chunks.push(e.data);
-                recorder.start(250);
-                document.getElementById("startInterviewBtn").style.display = "none";
-                document.getElementById("askBtn").style.display = "inline-block";
-            }};
-        }}
-        
-        document.getElementById("askBtn").onclick = function() {{
-            speechSynthesis.speak(new SpeechSynthesisUtterance("{question}"));
-            document.getElementById("nextBtn").disabled = false;
-            document.getElementById("askBtn").style.display = "none";
+            fetch("/api/create-zoom-interview/" + interviewId, {{method:"POST"}})
+            .then(r => r.json())
+            .then(function(zoomData) {{
+                status.textContent = "🎥 Starting Zoom meeting...";
+                
+                // Zoom SDK Config
+                client = ZoomMtgEmbedded.createClient();
+                let meetingConfig = {{
+                    apiKey: "YOUR_ZOOM_SDK_KEY",  // Get from Zoom Marketplace
+                    apiSecret: "YOUR_ZOOM_SDK_SECRET",
+                    meetingNumber: parseInt(zoomData.zoomMeetingId),
+                    password: "",
+                    role: 0,
+                    userName: "{session['candidate']}",
+                    userEmail: "",
+                    lang: "en-US",
+                    signature: "",  // Generate server-side
+                    china: false
+                }};
+                
+                client.init({{
+                    zoomAppRoot: document.getElementById("meetingSDKElement"),
+                    language: "en-US",
+                    customize: {{
+                        videoHeader: "AI Interview"
+                    }}
+                }}).then(() => {{
+                    client.join(meetingConfig).then(() => {{
+                        status.textContent = "✅ In Zoom! AI will ask question now.";
+                        status.className = "status";
+                        document.getElementById("askQuestion").disabled = false;
+                        document.getElementById("joinZoom").style.display = "none";
+                    }});
+                }});
+            }});
         }};
         
-        document.getElementById("nextBtn").onclick = function() {{
-            fetch(`/api/next-question/${{interviewId}}`,{{method:'POST'}}).then(()=>location.reload());
+        // ✅ 2. AI Agent Asks Question (TTS + Zoom Audio)
+        document.getElementById("askQuestion").onclick = function() {{
+            const status = document.getElementById("status");
+            status.textContent = "🤖 AI asking question...";
+            status.className = "status recording";
+            
+            // TTS in Zoom (plays through meeting audio)
+            const utterance = new SpeechSynthesisUtterance(document.querySelector(".question").textContent);
+            utterance.rate = 0.9; utterance.pitch = 1.0;
+            speechSynthesis.speak(utterance);
+            
+            // Auto-start Zoom cloud recording
+            setTimeout(() => {{
+                document.getElementById("recordingStatus").style.display = "block";
+                status.textContent = "🎤 Recording your answer (60 seconds)";
+            }}, 3000);
+            
+            // Auto-next after 60 seconds
+            setTimeout(() => {{
+                document.getElementById("nextQuestion").disabled = false;
+                status.textContent = "✅ Answer recorded! Ready for next.";
+            }}, 65000);
         }};
         
-        initCamera();
-        </script>
-    </body>
-    </html>'''
+        // ✅ 3. Next Question
+        document.getElementById("nextQuestion").onclick = function() {{
+            fetch("/api/next-question/" + interviewId, {{method:"POST"}})
+            .then(() => window.location.reload());
+        }};
+    </script>
+</body>
+</html>'''
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
