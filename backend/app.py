@@ -773,7 +773,7 @@
                 const timer=setInterval(() => {{
                     time--;
                     const m=Math.floor(time/60),s=time%60;
-                    document.getElementById('status').textContent=`🔴 Recording (${m}:${s.toString().padStart(2,'0')})`;
+                    document.getElementById('status').textContent='🔴 Recording (${m}:${s.toString().padStart(2,'0')})';
                     if(time<=0){{clearInterval(timer);recorder.stop();}}
                 }},1000);
             }};
