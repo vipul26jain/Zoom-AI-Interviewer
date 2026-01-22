@@ -604,53 +604,53 @@ def interview_room(interview_id, candidate_name):
 </body></html>'''
 
 
-def start_ai_bot(start_url, interview_id):
-    """🤖 AI Bot: Joins Zoom + Controls Interview"""
-    print(f"🤖 AI Bot starting for {interview_id}...")
+# def start_ai_bot(start_url, interview_id):
+#     """🤖 AI Bot: Joins Zoom + Controls Interview"""
+#     print(f"🤖 AI Bot starting for {interview_id}...")
     
-    options = webdriver.ChromeOptions()
-    options.add_argument("--use-fake-ui-for-media-stream")
-    options.add_argument("--autoplay-policy=no-user-gesture-required")
-    options.add_argument("--disable-web-security")
+#     # options = webdriver.ChromeOptions()
+#     # options.add_argument("--use-fake-ui-for-media-stream")
+#     # options.add_argument("--autoplay-policy=no-user-gesture-required")
+#     # options.add_argument("--disable-web-security")
     
-    driver = webdriver.Chrome(options=options)
+#     # driver = webdriver.Chrome(options=options)
     
-    try:
-        # 1. Join Zoom as AI Host
-        driver.get(start_url)
-        time.sleep(5)
+#     try:
+#         # 1. Join Zoom as AI Host
+#         driver.get(start_url)
+#         time.sleep(5)
         
-        # 2. Auto-click "Join with video" 
-        join_btn = driver.find_element(By.XPATH, "//button[contains(text(), 'Join')]")
-        join_btn.click()
-        time.sleep(3)
+#         # 2. Auto-click "Join with video" 
+#         join_btn = driver.find_element(By.XPATH, "//button[contains(text(), 'Join')]")
+#         join_btn.click()
+#         time.sleep(3)
         
-        # 3. AI Interview Loop
-        session = active_interviews.get(interview_id)
-        questions = session.get('questions', [])
+#         # 3. AI Interview Loop
+#         session = active_interviews.get(interview_id)
+#         questions = session.get('questions', [])
         
-        for i, question in enumerate(questions):
-            print(f"🤖 AI asking Q{i+1}: {question['text']}")
+#         for i, question in enumerate(questions):
+#             print(f"🤖 AI asking Q{i+1}: {question['text']}")
             
-            # Ask question via TTS (play audio)
-            tts_url = f"http://localhost:5000/api/tts-question/{i+1}?text={question['text']}"
-            driver.execute_script(f"fetch('{tts_url}')")
-            time.sleep(5)  # Let question play
+#             # Ask question via TTS (play audio)
+#             tts_url = f"http://localhost:5000/api/tts-question/{i+1}?text={question['text']}"
+#             driver.execute_script(f"fetch('{tts_url}')")
+#             time.sleep(5)  # Let question play
             
-            # Wait for candidate answer (2 minutes)
-            time.sleep(120)
+#             # Wait for candidate answer (2 minutes)
+#             time.sleep(120)
             
-            # AI says "Next question" 
-            next_tts = f"http://localhost:5000/api/tts-question/0?text=Next question please."
-            driver.execute_script(f"fetch('{next_tts}')")
-            time.sleep(3)
+#             # AI says "Next question" 
+#             next_tts = f"http://localhost:5000/api/tts-question/0?text=Next question please."
+#             driver.execute_script(f"fetch('{next_tts}')")
+#             time.sleep(3)
         
-        print("✅ AI Interview COMPLETE - Full recording saved to Zoom cloud")
+#         print("✅ AI Interview COMPLETE - Full recording saved to Zoom cloud")
         
-    except Exception as e:
-        print(f"🤖 Bot error: {e}")
-    finally:
-        driver.quit()
+#     except Exception as e:
+#         print(f"🤖 Bot error: {e}")
+#     finally:
+#         driver.quit()
 
 @app.route('/api/get-recording/<meeting_id>')
 def get_recording(meeting_id):
