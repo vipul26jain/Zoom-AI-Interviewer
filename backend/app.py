@@ -254,37 +254,56 @@ load_interviews()
 #         "joinUrl": f"/create-zoom-meeting/{interview_id}/{candidate_name.replace(' ', '-')}"
 #     })
 
-@app.route('/api/create-interview', methods=['POST', 'OPTIONS'])
+# @app.route('/api/create-interview', methods=['POST', 'OPTIONS'])
+# def create_interview():
+#     if request.method == 'OPTIONS':
+#         return jsonify({"status": "ok"})
+    
+#     data = request.get_json() or {}
+#     questions = data.get('questions', [])
+#     candidate_name = data.get('candidateName', 'Candidate')
+#     skills = data.get('skills', [])  # ✅ Skills from frontend
+    
+#     interview_id = str(uuid.uuid4())[:8].upper()
+    
+#     # ✅ ENHANCED STRUCTURE: Greeting + Technical + Adaptive
+#     active_interviews[interview_id] = {
+#         'id': interview_id,
+#         'candidate': candidate_name,
+#         'skills': skills,  # ✅ Stored for AI adaptation
+#         'original_questions': questions,
+#         'current_question': 0,
+#         'answers': [],
+#         'analysis': [],
+#         'interview_complete': False,
+#         'greeting_done': False
+#     }
+    
+#     print(f"🎤 Adaptive interview {interview_id} created with skills: {skills}")
+#     return jsonify({
+#         "interviewId": interview_id,
+#         "joinUrl": f"/interview/{interview_id}/{candidate_name.replace(' ', '-')}"
+#     })
+
+@app.route('/api/create-interview', methods=['POST'])
 def create_interview():
-    if request.method == 'OPTIONS':
-        return jsonify({"status": "ok"})
-    
-    data = request.get_json() or {}
-    questions = data.get('questions', [])
-    candidate_name = data.get('candidateName', 'Candidate')
-    skills = data.get('skills', [])  # ✅ Skills from frontend
-    
+    data = request.get_json()
     interview_id = str(uuid.uuid4())[:8].upper()
     
-    # ✅ ENHANCED STRUCTURE: Greeting + Technical + Adaptive
+    # ✅ AI-CONTROLLED SESSION
     active_interviews[interview_id] = {
         'id': interview_id,
-        'candidate': candidate_name,
-        'skills': skills,  # ✅ Stored for AI adaptation
-        'original_questions': questions,
+        'candidate': data['candidateName'],
+        'skills': data.get('skills', []),
+        'questions': data['questions'],
         'current_question': 0,
         'answers': [],
-        'analysis': [],
-        'interview_complete': False,
-        'greeting_done': False
+        'ai_analysis': [],
+        'flow_state': 'greeting',  # greeting → technical → adaptive
+        'complete': False
     }
     
-    print(f"🎤 Adaptive interview {interview_id} created with skills: {skills}")
-    return jsonify({
-        "interviewId": interview_id,
-        "joinUrl": f"/interview/{interview_id}/{candidate_name.replace(' ', '-')}"
-    })
-
+    return jsonify({"interviewId": interview_id, "room": f"/ai-interview/{interview_id}"})
 
 @app.route('/api/create-zoom-meeting/<interview_id>/<candidate_name>', methods=['POST', 'OPTIONS'])
 def create_zoom_meeting(interview_id, candidate_name):
@@ -390,6 +409,44 @@ def create_zoom_meeting(interview_id, candidate_name):
             "error": str(e),
             "demo_url": f"http://localhost:5000/interview/{interview_id}/{candidate_name.replace(' ', '-')}"
         })
+
+@app.route('/api/analyze-answer', methods=['POST'])
+def analyze_answer():
+    interview_id = request.form.get('interviewId')
+    session = active_interviews.get(interview_id)
+    
+    if not session:
+        return jsonify({"error": "Session not found"}), 404
+    
+    # Save video file
+    video_file = request.files['video']
+    video_path = f"answers/{interview_id}_q{session['current_question']}.webm"
+    video_file.save(video_path)
+    
+    # Mock AI analysis (replace with Whisper + LLM)
+    session['answers'].append({
+        'question': session['questions'][session['current_question']]['text'],
+        'video': video_path,
+        'timestamp': datetime.now().isoformat()
+    })
+    
+    # Generate adaptive next question
+    current_idx = session['current_question']
+    if current_idx < len(session['questions']) - 1:
+        next_question = session['questions'][current_idx + 1]['text']
+        session['current_question'] += 1
+    else:
+        next_question = "Thank you! Interview complete. Check your email for results."
+        session['complete'] = True
+    
+    save_interviews()
+    
+    return jsonify({
+        "score": 4,
+        "feedback": "Great technical understanding! Let's dive deeper.",
+        "next_question": next_question
+    })
+
 
 @app.route('/interview/<interview_id>/<candidate_name>')
 def interview_room(interview_id, candidate_name):
@@ -756,3 +813,140 @@ def debug():
         "active_interviews": list(active_interviews.keys()),
         "count": len(active_interviews)
     })
+
+@app.route('/ai-interview/<interview_id>')
+def ai_interview_room(interview_id):
+    session = active_interviews.get(interview_id)
+    if not session:
+        return "Interview not found", 404
+    
+    current_state = session.get('flow_state', 'greeting')
+    current_question = ""
+    
+    if current_state == 'greeting':
+        current_question = "👋 Hello! Welcome to our AI technical interview. Please introduce yourself (30 seconds)."
+    elif current_state == 'technical':
+        questions = session.get('questions', [])
+        current_question = questions[0]['text'] if questions else "Great intro! Let's start with technical questions."
+    
+    return f'''
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🤖 AI Interview Bot - {interview_id}</title>
+    <style>/* Same styles as before */</style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI Technical Interview Bot</h1>
+        <div class="videos">
+            <div class="video-container">
+                <h3>🤖 AI Interviewer</h3>
+                <video id="aiVideo" autoplay muted></video>
+            </div>
+            <div class="video-container">
+                <h3>{session['candidate']}</h3>
+                <video id="candidateVideo" autoplay muted></video>
+            </div>
+        </div>
+        
+        <div class="question-area">
+            <div class="question" id="currentQuestion">{current_question}</div>
+            <div class="status" id="status">🎤 Ready to start</div>
+            <button id="recordBtn" class="record-btn">🎤 Record Answer</button>
+            <button id="nextBtn" class="next-btn" style="display:none">Next Question →</button>
+        </div>
+    </div>
+
+    <script>
+        let stream, recorder, chunks = [], interviewId = '{interview_id}';
+        let currentState = '{current_state}';
+        
+        // Get video/audio stream
+        navigator.mediaDevices.getUserMedia({{
+            video: {{width: 640, height: 480, facingMode: 'user'}},
+            audio: {{echoCancellation: true, noiseSuppression: true}}
+        }}).then(s => {{
+            stream = s;
+            document.getElementById('candidateVideo').srcObject = s;
+            createAnimatedAI();
+            speakCurrentQuestion();
+        }});
+        
+        // Animated AI avatar
+        function createAnimatedAI() {{
+            const canvas = document.createElement('canvas');
+            canvas.width = 640; canvas.height = 360;
+            const ctx = canvas.getContext('2d');
+            document.getElementById('aiVideo').srcObject = canvas.captureStream(30);
+            
+            let frame = 0;
+            function animate() {{
+                ctx.fillStyle = '#1a1a2e'; ctx.fillRect(0, 0, 640, 360);
+                const radius = 85 + Math.sin(frame * 0.1) * 10;
+                const gradient = ctx.createRadialGradient(320, 180, 0, 320, 180, radius);
+                gradient.addColorStop(0, '#00d4ff'); gradient.addColorStop(1, 'rgba(26,46,78,0.9)');
+                ctx.fillStyle = gradient; ctx.beginPath(); ctx.arc(320, 180, radius, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#16213e'; ctx.fillRect(300, 225, 40, 25 + Math.sin(frame * 0.4) * 12);
+                frame++; requestAnimationFrame(animate);
+            }} animate();
+        }}
+        
+        function speakCurrentQuestion() {{
+            const question = document.getElementById('currentQuestion').textContent;
+            fetch(`/api/tts-question?interview=${{interviewId}}&text=` + encodeURIComponent(question))
+                .then(() => console.log('✅ AI speaking'));
+        }}
+        
+        // Record answer → AI analyzes → Next question
+        document.getElementById('recordBtn').onclick = async () => {{
+            recorder = new MediaRecorder(stream);
+            chunks = [];
+            recorder.ondataavailable = e => chunks.push(e.data);
+            recorder.onstop = sendToAI;
+            recorder.start();
+            
+            let timeLeft = 120; // 2 minutes
+            document.getElementById('status').textContent = `🔴 Recording (${{Math.floor(timeLeft/60)}}:${{timeLeft%60}}`;
+            document.getElementById('recordBtn').textContent = '🔴 Recording...';
+            
+            const timer = setInterval(() => {{
+                timeLeft--;
+                const mins = Math.floor(timeLeft / 60);
+                const secs = timeLeft % 60;
+                document.getElementById('status').textContent = `🔴 Recording (${{mins}}: ${{secs.toString().padStart(2,'0')}})`;
+                if (timeLeft <= 0) {{
+                    clearInterval(timer);
+                    recorder.stop();
+                }}
+            }}, 1000);
+        }};
+        
+        async function sendToAI() {{
+            const blob = new Blob(chunks, {{type: 'video/webm'}});
+            const formData = new FormData();
+            formData.append('video', blob, 'answer.webm');
+            formData.append('interviewId', interviewId);
+            
+            document.getElementById('status').textContent = '🤖 AI analyzing your answer...';
+            
+            try {{
+                const response = await fetch('/api/analyze-answer', {{
+                    method: 'POST',
+                    body: formData
+                }});
+                const data = await response.json();
+                
+                // AI generates next question
+                document.getElementById('currentQuestion').textContent = data.next_question;
+                document.getElementById('recordBtn').style.display = 'block';
+                document.getElementById('recordBtn').textContent = '🎤 Record Next Answer';
+                document.getElementById('status').textContent = `✅ Analysis: ${{data.score}}/5 | Ready for next question`;
+                
+            }} catch(e) {{
+                console.error('AI analysis failed:', e);
+            }}
+        }}
+    </script>
+</body>
+</html>'''
