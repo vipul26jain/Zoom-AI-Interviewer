@@ -10,8 +10,8 @@ import requests
 import base64
 import threading
 import time
-from selenium import webdriver
-from selenium.webdriver.common.by import By
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
 import pyautogui
 
 load_dotenv()
