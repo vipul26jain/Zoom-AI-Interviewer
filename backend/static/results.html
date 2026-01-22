@@ -1,0 +1,22 @@
+<!-- Add to your HTML after interview -->
+<div id="results" style="display:none;">
+    <h2>✅ Interview Complete!</h2>
+    <button onclick="getResults()">📹 Download Recording + Transcript</button>
+    <div id="recording-links"></div>
+</div>
+
+<script>
+async function getResults() {
+    const meetingId = sessionStorage.getItem('meetingId');
+    const response = await fetch(`/api/get-recording/${meetingId}`);
+    const data = await response.json();
+    
+    document.getElementById('recording-links').innerHTML = `
+        <div style="background:#16213e;padding:20px;border-radius:10px;margin:10px 0">
+            <strong>📹 Video:</strong> <a href="${data.recordings.video}" target="_blank">Download</a><br>
+            <strong>🎵 Audio:</strong> <a href="${data.recordings.audio}" target="_blank">Download</a><br>
+            <strong>📄 Transcript:</strong> <a href="${data.recordings.transcript}" target="_blank">Download</a>
+        </div>
+    `;
+}
+</script>
