@@ -1530,6 +1530,8 @@ def submit_answer(interview_id):
     session = active_interviews.get(interview_id)
     if session:
         print(f"Submit Answer check Session : {session}")
+        if 'answers' not in session:
+            session['answers'] = []
         video_file = request.files.get('video')  # ✅ Changed from 'audio' to 'video'
         if video_file:
             print(f"Submit Answer check video file : {video_file}")
