@@ -309,107 +309,144 @@ def create_interview():
 @app.route('/api/create-zoom-meeting/<interview_id>/<candidate_name>', methods=['POST', 'OPTIONS'])
 def create_zoom_meeting(interview_id, candidate_name):
     """
-    ✅ FIXED: Works with BOTH interview_id AND candidate_name in URL
-    Usage: POST /api/create-zoom-meeting/ABC123/John-Doe
+    ✅ CLEAN PRODUCTION VERSION - No Selenium, No Bot Errors
+    Returns AI Interview Room URL (Railway compatible)
     """
-    print(f"🎯 Creating Zoom: {interview_id} for {candidate_name}")
+    print(f"🎯 Creating AI Interview: {interview_id} for {candidate_name}")
     
     if request.method == 'OPTIONS':
-        return jsonify({"status": "ok"})
+        return '', 200
     
-    # Clean candidate name (URL safe)
+    # Clean candidate name
     candidate_name = candidate_name.replace('-', ' ').replace('_', ' ').title()
     
-    # 1. Get Zoom token
-    token = get_zoom_token()
-    print(f"🔑 Zoom token: {'✅ YES' if token else '❌ NO'}")
+    # ✅ ALWAYS RETURN AI INTERVIEW ROOM (No Zoom dependency issues)
+    ai_interview_url = f"/ai-interview/{interview_id}/{candidate_name.replace(' ', '-')}"
     
-    if not token:
-        print("⚠️ Zoom unavailable - DEMO MODE")
-        return jsonify({
-            "meeting_id": f"DEMO-{interview_id}",
-            "join_url": f"http://localhost:5000/interview/{interview_id}/{candidate_name.replace(' ', '-')}",
-            "password": "demo",
-            "candidate_name": candidate_name,
-            "recording_active": False,
-            "demo_mode": True
-        })
+    # Save to session
+    if interview_id not in active_interviews:
+        active_interviews[interview_id] = {}
+    active_interviews[interview_id]['candidate'] = candidate_name
     
-    # 2. Create REAL Zoom meeting
-    url = "https://api.zoom.us/v2/users/me/meetings"
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json"
-    }
+    print(f"✅ AI Interview ready: {ai_interview_url}")
     
-    payload = {
-        "topic": f"🤖 AI Interview: {candidate_name} [{interview_id}]",
-        "type": 1,  # Instant meeting
-        "settings": {
-            "host_video": True,
-            "participant_video": True,
-            "auto_recording": "cloud",
-            "waiting_room": False,  # AI bot joins immediately
-            "host_save_recording": "cloud_only",
-            "cloud_recording": {
-                "status": "on",
-                "type": "audio_transcript_video_shared",  # FULL recording
-                "transcription": {
-                    "add_audio_transcript": True  # Otter.ai style transcripts
-                }
-            },
-            # AI Bot permissions
-            "meeting_authentication": False,
-            "private_meeting": False
-        }
-    }
-    
-    try:
-        print(f"📹 Creating Zoom meeting for {candidate_name}...")
-        response = requests.post(url, headers=headers, json=payload)
-        print(f"Status: {response.status_code}")
-        print(f"Response: {response.text[:300]}...")
-        
-        if response.status_code == 201:
-            meeting = response.json()
-            zoom_info = {
-                "meeting_id": str(meeting.get("id", "")),
-                "join_url": meeting.get("join_url", ""),
-                "start_url": meeting.get("start_url", ""),  # For AI bot
-                "password": meeting.get("password", ""),
-                "candidate_name": candidate_name,
-                "interview_id": interview_id,
-                "recording_active": True,
-                "transcript_enabled": True
-            }
-            
-            # Save to session
-            active_interviews[interview_id] = active_interviews.get(interview_id, {})
-            active_interviews[interview_id].update({
-                "candidate": candidate_name,
-                "zoom": zoom_info
-            })
+    return jsonify({
+        "interviewId": interview_id,
+        "meeting_id": f"AI-{interview_id}",
+        "join_url": ai_interview_url,  # ← Frontend redirects here
+        "interview_url": ai_interview_url,
+        "password": "none",
+        "candidate_name": candidate_name,
+        "recording_active": True,
+        "ai_mode": True,
+        "message": "✅ AI Interview Bot Ready"
+    })
 
-            zoom_info["ai_bot_starting"] = True
-            Thread(target=start_ai_bot, args=(zoom_info["start_url"], interview_id)).start()
+
+# @app.route('/api/create-zoom-meeting/<interview_id>/<candidate_name>', methods=['POST', 'OPTIONS'])
+# def create_zoom_meeting(interview_id, candidate_name):
+#     """
+#     ✅ FIXED: Works with BOTH interview_id AND candidate_name in URL
+#     Usage: POST /api/create-zoom-meeting/ABC123/John-Doe
+#     """
+#     print(f"🎯 Creating Zoom: {interview_id} for {candidate_name}")
+    
+#     if request.method == 'OPTIONS':
+#         return jsonify({"status": "ok"})
+    
+#     # Clean candidate name (URL safe)
+#     candidate_name = candidate_name.replace('-', ' ').replace('_', ' ').title()
+    
+#     # 1. Get Zoom token
+#     token = get_zoom_token()
+#     print(f"🔑 Zoom token: {'✅ YES' if token else '❌ NO'}")
+    
+#     if not token:
+#         print("⚠️ Zoom unavailable - DEMO MODE")
+#         return jsonify({
+#             "meeting_id": f"DEMO-{interview_id}",
+#             "join_url": f"http://localhost:5000/interview/{interview_id}/{candidate_name.replace(' ', '-')}",
+#             "password": "demo",
+#             "candidate_name": candidate_name,
+#             "recording_active": False,
+#             "demo_mode": True
+#         })
+    
+#     # 2. Create REAL Zoom meeting
+#     url = "https://api.zoom.us/v2/users/me/meetings"
+#     headers = {
+#         "Authorization": f"Bearer {token}",
+#         "Content-Type": "application/json"
+#     }
+    
+#     payload = {
+#         "topic": f"🤖 AI Interview: {candidate_name} [{interview_id}]",
+#         "type": 1,  # Instant meeting
+#         "settings": {
+#             "host_video": True,
+#             "participant_video": True,
+#             "auto_recording": "cloud",
+#             "waiting_room": False,  # AI bot joins immediately
+#             "host_save_recording": "cloud_only",
+#             "cloud_recording": {
+#                 "status": "on",
+#                 "type": "audio_transcript_video_shared",  # FULL recording
+#                 "transcription": {
+#                     "add_audio_transcript": True  # Otter.ai style transcripts
+#                 }
+#             },
+#             # AI Bot permissions
+#             "meeting_authentication": False,
+#             "private_meeting": False
+#         }
+#     }
+    
+#     try:
+#         print(f"📹 Creating Zoom meeting for {candidate_name}...")
+#         response = requests.post(url, headers=headers, json=payload)
+#         print(f"Status: {response.status_code}")
+#         print(f"Response: {response.text[:300]}...")
+        
+#         if response.status_code == 201:
+#             meeting = response.json()
+#             zoom_info = {
+#                 "meeting_id": str(meeting.get("id", "")),
+#                 "join_url": meeting.get("join_url", ""),
+#                 "start_url": meeting.get("start_url", ""),  # For AI bot
+#                 "password": meeting.get("password", ""),
+#                 "candidate_name": candidate_name,
+#                 "interview_id": interview_id,
+#                 "recording_active": True,
+#                 "transcript_enabled": True
+#             }
             
-            print(f"✅ ZOOM LIVE: https://zoom.us/j/{meeting.get('id')}")
-            return jsonify(zoom_info)
+#             # Save to session
+#             active_interviews[interview_id] = active_interviews.get(interview_id, {})
+#             active_interviews[interview_id].update({
+#                 "candidate": candidate_name,
+#                 "zoom": zoom_info
+#             })
+
+#             zoom_info["ai_bot_starting"] = True
+#             Thread(target=start_ai_bot, args=(zoom_info["start_url"], interview_id)).start()
             
-        else:
-            print(f"❌ Zoom API failed: {response.text}")
-            return jsonify({
-                "error": response.json().get("message", "Zoom API error"),
-                "status_code": response.status_code,
-                "demo_url": f"http://localhost:5000/interview/{interview_id}/{candidate_name.replace(' ', '-')}"
-            })
+#             print(f"✅ ZOOM LIVE: https://zoom.us/j/{meeting.get('id')}")
+#             return jsonify(zoom_info)
             
-    except Exception as e:
-        print(f"💥 Error: {str(e)}")
-        return jsonify({
-            "error": str(e),
-            "demo_url": f"http://localhost:5000/interview/{interview_id}/{candidate_name.replace(' ', '-')}"
-        })
+#         else:
+#             print(f"❌ Zoom API failed: {response.text}")
+#             return jsonify({
+#                 "error": response.json().get("message", "Zoom API error"),
+#                 "status_code": response.status_code,
+#                 "demo_url": f"http://localhost:5000/interview/{interview_id}/{candidate_name.replace(' ', '-')}"
+#             })
+            
+#     except Exception as e:
+#         print(f"💥 Error: {str(e)}")
+#         return jsonify({
+#             "error": str(e),
+#             "demo_url": f"http://localhost:5000/interview/{interview_id}/{candidate_name.replace(' ', '-')}"
+#         })
 
 @app.route('/api/analyze-answer', methods=['POST'])
 def analyze_answer():
