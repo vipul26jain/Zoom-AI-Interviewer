@@ -12,7 +12,7 @@ import threading
 import time
 # from selenium import webdriver
 # from selenium.webdriver.common.by import By
-import pyautogui
+# import pyautogui
 
 load_dotenv()
 app = Flask(__name__)
