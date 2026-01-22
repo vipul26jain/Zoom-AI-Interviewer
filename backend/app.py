@@ -1523,13 +1523,16 @@ def create_zoom_meeting(interview_id, candidate_name):
 
 @app.route('/api/submit-answer/<interview_id>', methods=['POST', 'OPTIONS'])
 def submit_answer(interview_id):
+    print(f"Enter Sumbmit Answer")
     if request.method == 'OPTIONS':
         return jsonify({"status": "ok"})
     
     session = active_interviews.get(interview_id)
     if session:
+        print(f"Submit Answer check Session : {session}")
         video_file = request.files.get('video')  # ✅ Changed from 'audio' to 'video'
         if video_file:
+            print(f"Submit Answer check video file : {video_file}")
             os.makedirs("recordings", exist_ok=True)
             filename = video_file.filename
             filepath = f"recordings/{filename}"
