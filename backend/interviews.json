@@ -1,0 +1,43 @@
+{
+  "5932419F": {
+    "id": "5932419F",
+    "candidate": "Candidate",
+    "questions": [
+      {
+        "category": "technical",
+        "id": 1,
+        "text": "Can you describe your experience with senior?"
+      },
+      {
+        "category": "behavioral",
+        "id": 2,
+        "text": "Tell me about your most challenging project and your specific role in it"
+      },
+      {
+        "category": "technical",
+        "id": 3,
+        "text": "How do you approach performance optimization in production applications?"
+      },
+      {
+        "category": "technical",
+        "id": 4,
+        "text": "Walk me through your typical deployment and CI/CD process"
+      },
+      {
+        "category": "behavioral",
+        "id": 5,
+        "text": "Describe a time you had to learn a new technology under pressure"
+      },
+      {
+        "category": "technical",
+        "id": 6,
+        "text": "How do you handle code reviews and collaborate with other developers?"
+      }
+    ],
+    "current_question": 0,
+    "answers": [],
+    "ai_analysis": [],
+    "interview_complete": false,
+    "greeting_done": false
+  }
+}
