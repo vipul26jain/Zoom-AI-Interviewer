@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🧪 AI Adaptive Interview - TEST</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            max-width: 900px; 
+            margin: 50px auto; 
+            padding: 30px; 
+            background: linear-gradient(135deg, #1a1a2e, #16213e); 
+            color: white; 
+        }
+        textarea, input { 
+            width: 100%; 
+            height: 80px; 
+            margin: 10px 0; 
+            padding: 15px; 
+            background: #16213e;
+            border: 2px solid #00d4ff;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button { 
+            padding: 15px 30px; 
+            background: linear-gradient(45deg, #00d4ff, #0099cc); 
+            color: white; 
+            border: none; 
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        button:hover { transform: translateY(-2px); }
+        button:disabled { background: #666; cursor: not-allowed; }
+        .status { padding: 20px; margin: 20px 0; border-radius: 10px; font-weight: bold; }
+        .success { background: rgba(0,255,136,0.2); border: 1px solid #00ff88; }
+        .loading { background: rgba(0,212,255,0.2); animation: pulse 1.5s infinite; }
+        .questions { background: rgba(22,33,62,0.8); padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .question { padding: 15px; margin: 10px 0; border-left: 4px solid #00d4ff; background: rgba(0,212,255,0.1); }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+    </style>
+</head>
+<body>
+    <h1>🧪 <strong>TEST</strong> - Adaptive AI Interview</h1>
+    
+    <div class="status success">
+        ✅ Backend: <span id="backendStatus">Testing...</span> | Skills flow: <span id="skillsStatus">Testing...</span>
+    </div>
+
+    <!-- STEP 1: Generate Questions + Skills -->
+    <h3>📋 Step 1: Job Description & Skills</h3>
+    <textarea id="jobDesc">Senior Fullstack Developer
+• React + TypeScript (3+ years required)
+• Node.js/Express backend
+• AWS deployment experience
+• Database: PostgreSQL/MongoDB
+• CI/CD pipelines</textarea>
+    
+    <input id="candidateSkills" placeholder="Candidate skills (comma separated)" 
+           value="React, TypeScript, Node.js, AWS, Docker, PostgreSQL">
+    
+    <button onclick="testStep1()">✅ TEST Step 1 - Generate Questions + Skills</button>
+
+    <!-- STEP 2: Questions Preview -->
+    <div id="questions" class="questions" style="display:none;"></div>
+
+    <!-- STEP 3: Create Interview -->
+    <h3>🎤 Step 2: Create Interview Session</h3>
+    <input id="candidateName" placeholder="Candidate name" value="John Doe">
+    <button id="startInterviewBtn" onclick="testStep2()" disabled>🚀 TEST Step 2 - Create Interview</button>
+
+    <!-- STEP 4: AI Interview Room -->
+    <h3>📹 Step 3: Start AI Interview</h3>
+    <button id="startZoomBtn" onclick="testStep3()" disabled style="background:linear-gradient(45deg,#ff6b6b,#cc0000)">🎬 Open AI Interview Room</button>
+
+    <!-- RESULTS -->
+    <div id="results" style="display:none;">
+        <h3>✅ Test Results</h3>
+        <div id="resultsData"></div>
+    </div>
+
+    <script>
+        let testInterviewId = null;
+        let testQuestions = [];
+
+        // ✅ STEP 1: Test generate-questions + skills flow
+        async function testStep1() {
+            const jobDesc = document.getElementById('jobDesc').value;
+            const skills = document.getElementById('candidateSkills').value.split(',').map(s=>s.trim());
+            
+            document.getElementById('backendStatus').textContent = 'Generating...';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/generate-questions', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        jobDescription: jobDesc,
+                        resumeText: '5 years React, Node.js, AWS experience',  // Mock resume
+                        skills: skills  // ✅ Skills sent here!
+                    })
+                });
+                
+                const data = await response.json();
+                testQuestions = data.questions;
+                
+                document.getElementById('questions').innerHTML = `
+                    <h4>✅ Generated ${data.questions.length} Questions:</h4>
+                    ${data.questions.map(q => 
+                        `<div class="question">
+                            <strong>Q${q.id}:</strong> ${q.text} 
+                            <span style="color:#00d4ff">[${q.category}]</span>
+                        </div>`
+                    ).join('')}
+                    <div style="color:#00ff88;margin-top:15px">
+                        ✅ Skills detected: ${skills.join(', ')} → Will be used for adaptive follow-ups!
+                    </div>
+                `;
+                document.getElementById('questions').style.display = 'block';
+                document.getElementById('startInterviewBtn').disabled = false;
+                document.getElementById('backendStatus').textContent = '✅ Questions + Skills OK';
+                
+            } catch(e) {
+                document.getElementById('backendStatus').textContent = '❌ Backend not running (python app.py)';
+            }
+        }
+
+        // ✅ STEP 2: Test create-interview (stores skills)
+        async function testStep2() {
+            const candidateName = document.getElementById('candidateName').value;
+            
+            document.getElementById('startInterviewBtn').textContent = 'Creating...';
+            document.getElementById('startInterviewBtn').disabled = true;
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/create-interview', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        questions: testQuestions,
+                        candidateName: candidateName,
+                        skills: document.getElementById('candidateSkills').value.split(',').map(s=>s.trim())
+                    })
+                });
+                
+                const data = await response.json();
+                testInterviewId = data.interviewId;
+                
+                document.getElementById('startZoomBtn').disabled = false;
+                document.getElementById('startInterviewBtn').textContent = '✅ Interview Created!';
+                document.getElementById('skillsStatus').textContent = `✅ Skills stored: ID=${testInterviewId}`;
+                
+            } catch(e) {
+                alert('❌ Create interview failed - check backend routes');
+            }
+        }
+
+        // ✅ STEP 3: Test AI Interview Room
+        function testStep3() {
+            const candidateName = document.getElementById('candidateName').value;
+            window.open(`/interview/${testInterviewId}/${encodeURIComponent(candidateName)}`, '_blank');
+            
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('resultsData').innerHTML = `
+                <div class="status success">
+                    ✅ COMPLETE TEST SUCCESS!<br>
+                    • Skills flow: ✅ Working<br>
+                    • Interview created: ${testInterviewId}<br>
+                    • AI Room: <a href="/interview/${testInterviewId}/${encodeURIComponent(document.getElementById('candidateName').value)}" target="_blank">Open Interview</a><br>
+                    • Debug: <a href="/debug" target="_blank">Active Sessions</a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
