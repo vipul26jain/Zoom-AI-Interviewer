@@ -637,7 +637,7 @@
         "category": "technical"
       }
     ],
-    "status": "active",
+    "status": "completed",
     "created_at": "2026-01-29T17:37:34.790369",
     "zoom": {
       "join_url": "https://us05web.zoom.us/j/83488569442?pwd=4Qlzhbtw7bLbFMK09Se475aBDiy6U0.1",
@@ -658,6 +658,26 @@
         "role": "ai",
         "text": "Question 2: Describe your most challenging project and your role in it",
         "timestamp": "2026-01-29T17:39:25.713057"
+      },
+      {
+        "role": "ai",
+        "text": "Question 3: How do you optimize application performance?",
+        "timestamp": "2026-01-29T17:40:10.717890"
+      },
+      {
+        "role": "ai",
+        "text": "Question 4: Walk through your deployment process",
+        "timestamp": "2026-01-29T17:40:55.722990"
+      },
+      {
+        "role": "ai",
+        "text": "Question 5: Time you learned new technology quickly?",
+        "timestamp": "2026-01-29T17:41:40.728016"
+      },
+      {
+        "role": "ai",
+        "text": "Question 6: How do you handle code reviews?",
+        "timestamp": "2026-01-29T17:42:25.733996"
       }
     ],
     "candidate_transcripts": [
@@ -668,13 +688,55 @@
       {
         "question": 1,
         "transcript": "Candidate answered Q1 (transcribed from Zoom audio)"
+      },
+      {
+        "question": 2,
+        "transcript": "Candidate answered Q2 (transcribed from Zoom audio)"
+      },
+      {
+        "question": 3,
+        "transcript": "Candidate answered Q3 (transcribed from Zoom audio)"
+      },
+      {
+        "question": 4,
+        "transcript": "Candidate answered Q4 (transcribed from Zoom audio)"
+      },
+      {
+        "question": 5,
+        "transcript": "Candidate answered Q5 (transcribed from Zoom audio)"
+      },
+      {
+        "question": 6,
+        "transcript": "Candidate answered Q6 (transcribed from Zoom audio)"
       }
     ],
     "evaluations": [
       {
         "question": 1,
         "evaluation": "No AI response available"
+      },
+      {
+        "question": 2,
+        "evaluation": "No AI response available"
+      },
+      {
+        "question": 3,
+        "evaluation": "No AI response available"
+      },
+      {
+        "question": 4,
+        "evaluation": "No AI response available"
+      },
+      {
+        "question": 5,
+        "evaluation": "No AI response available"
+      },
+      {
+        "question": 6,
+        "evaluation": "No AI response available"
       }
-    ]
+    ],
+    "final_evaluation": "No AI response available",
+    "completed_at": "2026-01-29T17:43:10.738253"
   }
 }
