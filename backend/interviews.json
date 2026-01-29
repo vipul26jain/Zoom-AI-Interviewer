@@ -92,5 +92,166 @@
         "timestamp": "2026-01-29T16:14:46.984632"
       }
     ]
+  },
+  "F287A210": {
+    "id": "F287A210",
+    "candidate": "Candidate",
+    "questions": [
+      {
+        "category": "technical",
+        "id": 1,
+        "text": "Describe your technical experience"
+      },
+      {
+        "category": "behavioral",
+        "id": 2,
+        "text": "Most challenging project?"
+      },
+      {
+        "category": "technical",
+        "id": 3,
+        "text": "Performance optimization approach?"
+      }
+    ],
+    "current_question": 0,
+    "zoom": {
+      "meeting_id": "87642515327",
+      "join_url": "https://us05web.zoom.us/j/87642515327?pwd=aqu1Eej973sx4b0Q3p9Q54UIgrx1MP.1",
+      "start_url": "https://us05web.zoom.us/s/87642515327?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMiIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJ3ZWIiLCJjbHQiOjAsIm1udW0iOiI4NzY0MjUxNTMyNyIsImF1ZCI6ImNsaWVudHNtIiwidWlkIjoibmlqUFJxQkJRRk9CZGhmRmU5TVp2USIsInppZCI6ImZkMWM0NWVkNTA4MzRmYzA5ZTc5ZjRkOTg1MDVjZTc2Iiwic2siOiIwIiwic3R5IjoxMDAsIndjZCI6InVzMDUiLCJleHAiOjE3Njk2OTM2ODUsImlhdCI6MTc2OTY4NjQ4NSwiYWlkIjoiNjlObTFlU01UV2UtcHYwYmVHUW1KZyIsImNpZCI6IiJ9.UWr5wSXhzPMQk8pmPyYrESxA9z9wrq5aewrB2OK-PaE",
+      "password": "YFqMu0",
+      "candidate_name": "Candidate",
+      "interview_id": "F287A210"
+    },
+    "bot_messages": [
+      {
+        "type": "greeting",
+        "text": "Hello Candidate! Welcome to your AI technical interview. I'm your interviewer today. This will take 20-25 minutes. Ready? Let's begin!",
+        "timestamp": "2026-01-29T17:04:45.737764"
+      },
+      {
+        "type": "question",
+        "question_id": 1,
+        "text": "Question 1: Describe your technical experience",
+        "timestamp": "2026-01-29T17:04:50.738608"
+      },
+      {
+        "type": "question",
+        "question_id": 2,
+        "text": "Question 2: Most challenging project?",
+        "timestamp": "2026-01-29T17:05:10.739948"
+      },
+      {
+        "type": "question",
+        "question_id": 3,
+        "text": "Question 3: Performance optimization approach?",
+        "timestamp": "2026-01-29T17:05:30.741594"
+      },
+      {
+        "type": "closing",
+        "text": "Thank you Candidate! Interview complete. Results in 24 hours.",
+        "timestamp": "2026-01-29T17:05:50.743052"
+      }
+    ],
+    "candidate_responses": [
+      {
+        "question_id": 1,
+        "text": "Candidate Candidate answered Q1",
+        "timestamp": "2026-01-29T17:05:10.739818"
+      },
+      {
+        "question_id": 2,
+        "text": "Candidate Candidate answered Q2",
+        "timestamp": "2026-01-29T17:05:30.741465"
+      },
+      {
+        "question_id": 3,
+        "text": "Candidate Candidate answered Q3",
+        "timestamp": "2026-01-29T17:05:50.743052"
+      }
+    ],
+    "interview_completed": true
+  },
+  "8063B053": {
+    "id": "8063B053",
+    "candidate": "Candidate",
+    "questions": [
+      {
+        "category": "technical",
+        "id": 1,
+        "text": "Can you describe your experience with senior?"
+      },
+      {
+        "category": "behavioral",
+        "id": 2,
+        "text": "Tell me about your most challenging project and your specific role in it"
+      },
+      {
+        "category": "technical",
+        "id": 3,
+        "text": "How do you approach performance optimization in production applications?"
+      },
+      {
+        "category": "technical",
+        "id": 4,
+        "text": "Walk me through your typical deployment and CI/CD process"
+      },
+      {
+        "category": "behavioral",
+        "id": 5,
+        "text": "Describe a time you had to learn a new technology under pressure"
+      },
+      {
+        "category": "technical",
+        "id": 6,
+        "text": "How do you handle code reviews and collaborate with other developers?"
+      }
+    ],
+    "current_question": 0,
+    "bot_messages": [
+      {
+        "type": "greeting",
+        "text": "Hello Candidate! Welcome to your technical interview. I'm your AI interviewer today. This will take about 25 minutes. Could you please start with a brief introduction about yourself?",
+        "timestamp": "2026-01-29T17:10:24.969088",
+        "question_id": 0
+      },
+      {
+        "type": "question",
+        "question_id": 1,
+        "text": "Question 1: Can you describe your experience with senior?",
+        "timestamp": "2026-01-29T17:10:34.970642"
+      },
+      {
+        "type": "question",
+        "question_id": 2,
+        "text": "Question 2: Tell me about your most challenging project and your specific role in it",
+        "timestamp": "2026-01-29T17:10:59.973636"
+      },
+      {
+        "type": "question",
+        "question_id": 3,
+        "text": "Question 3: How do you approach performance optimization in production applications?",
+        "timestamp": "2026-01-29T17:11:24.976705"
+      }
+    ],
+    "candidate_responses": [
+      {
+        "question_id": 1,
+        "text": "Candidate Candidate answered Q1 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:10:59.972591"
+      },
+      {
+        "question_id": 2,
+        "text": "Candidate Candidate answered Q2 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:11:24.976705"
+      }
+    ],
+    "zoom": {
+      "meeting_id": "81250651162",
+      "join_url": "https://us05web.zoom.us/j/81250651162?pwd=tpQOT1r7RPv8o78bO1aGbHwUCEFHqT.1",
+      "start_url": "https://us05web.zoom.us/s/81250651162?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMiIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJ3ZWIiLCJjbHQiOjAsIm1udW0iOiI4MTI1MDY1MTE2MiIsImF1ZCI6ImNsaWVudHNtIiwidWlkIjoibmlqUFJxQkJRRk9CZGhmRmU5TVp2USIsInppZCI6IjBlYTlhNWNkZTgyNjQxODhiZjdiNDk1NzhjMWVmZGRlIiwic2siOiIwIiwic3R5IjoxMDAsIndjZCI6InVzMDUiLCJleHAiOjE3Njk2OTQwMjQsImlhdCI6MTc2OTY4NjgyNCwiYWlkIjoiNjlObTFlU01UV2UtcHYwYmVHUW1KZyIsImNpZCI6IiJ9.zfwDg99MaBCPHGH3JBTpobkCLAgWJZdItL9vckE6zW8",
+      "password": "p5Q12Y",
+      "candidate_name": "Candidate",
+      "interview_id": "8063B053"
+    }
   }
 }
