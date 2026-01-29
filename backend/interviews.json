@@ -39,5 +39,58 @@
     "ai_analysis": [],
     "interview_complete": false,
     "greeting_done": false
+  },
+  "5F0CBAB7": {
+    "id": "5F0CBAB7",
+    "candidate": "Candidate",
+    "questions": [
+      {
+        "category": "technical",
+        "id": 1,
+        "text": "Describe your experience with React"
+      },
+      {
+        "category": "behavioral",
+        "id": 2,
+        "text": "Most challenging project?"
+      },
+      {
+        "category": "technical",
+        "id": 3,
+        "text": "Performance optimization approach?"
+      }
+    ],
+    "current_question": 0,
+    "zoom": {
+      "meeting_id": "88483411812",
+      "join_url": "https://us05web.zoom.us/j/88483411812?pwd=cxa9RqQ1fkKSayxvhjIeTBVEBfzfYY.1",
+      "start_url": "https://us05web.zoom.us/s/88483411812?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMiIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJ3ZWIiLCJjbHQiOjAsIm1udW0iOiI4ODQ4MzQxMTgxMiIsImF1ZCI6ImNsaWVudHNtIiwidWlkIjoibmlqUFJxQkJRRk9CZGhmRmU5TVp2USIsInppZCI6IjM1NDIxNzc4ZDQ5YzRjYzg5ZTNjODM2M2I5Yzc1YzY5Iiwic2siOiIwIiwic3R5IjoxMDAsIndjZCI6InVzMDUiLCJleHAiOjE3Njk2OTA2NDcsImlhdCI6MTc2OTY4MzQ0NywiYWlkIjoiNjlObTFlU01UV2UtcHYwYmVHUW1KZyIsImNpZCI6IiJ9.Ca2m-h_7BBPWB35eysmhE3wDyENJM0W_QQnlfKP8Uzs",
+      "password": "cBn568",
+      "candidate_name": "Candidate",
+      "interview_id": "5F0CBAB7"
+    },
+    "answers": [
+      {
+        "question_id": 1,
+        "question": "Describe your experience with React",
+        "response": "I have 3 years experience with React and Node.js...",
+        "analysis": "Analysis unavailable (no Groq key)",
+        "timestamp": "2026-01-29T16:14:10.978791"
+      },
+      {
+        "question_id": 2,
+        "question": "Most challenging project?",
+        "response": "I have 3 years experience with React and Node.js...",
+        "analysis": "Analysis unavailable (no Groq key)",
+        "timestamp": "2026-01-29T16:14:28.982829"
+      },
+      {
+        "question_id": 3,
+        "question": "Performance optimization approach?",
+        "response": "I have 3 years experience with React and Node.js...",
+        "analysis": "Analysis unavailable (no Groq key)",
+        "timestamp": "2026-01-29T16:14:46.984632"
+      }
+    ]
   }
 }
