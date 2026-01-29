@@ -231,6 +231,29 @@
         "question_id": 3,
         "text": "Question 3: How do you approach performance optimization in production applications?",
         "timestamp": "2026-01-29T17:11:24.976705"
+      },
+      {
+        "type": "question",
+        "question_id": 4,
+        "text": "Question 4: Walk me through your typical deployment and CI/CD process",
+        "timestamp": "2026-01-29T17:11:49.980628"
+      },
+      {
+        "type": "question",
+        "question_id": 5,
+        "text": "Question 5: Describe a time you had to learn a new technology under pressure",
+        "timestamp": "2026-01-29T17:12:14.983667"
+      },
+      {
+        "type": "question",
+        "question_id": 6,
+        "text": "Question 6: How do you handle code reviews and collaborate with other developers?",
+        "timestamp": "2026-01-29T17:12:39.986799"
+      },
+      {
+        "type": "closing",
+        "text": "Thank you Candidate! That's all the questions. Your interview is now complete. You'll receive feedback within 24 hours. Have a great day!",
+        "timestamp": "2026-01-29T17:13:04.993809"
       }
     ],
     "candidate_responses": [
@@ -243,6 +266,26 @@
         "question_id": 2,
         "text": "Candidate Candidate answered Q2 (recorded via Zoom)",
         "timestamp": "2026-01-29T17:11:24.976705"
+      },
+      {
+        "question_id": 3,
+        "text": "Candidate Candidate answered Q3 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:11:49.979586"
+      },
+      {
+        "question_id": 4,
+        "text": "Candidate Candidate answered Q4 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:12:14.983133"
+      },
+      {
+        "question_id": 5,
+        "text": "Candidate Candidate answered Q5 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:12:39.985758"
+      },
+      {
+        "question_id": 6,
+        "text": "Candidate Candidate answered Q6 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:13:04.988787"
       }
     ],
     "zoom": {
@@ -252,6 +295,386 @@
       "password": "p5Q12Y",
       "candidate_name": "Candidate",
       "interview_id": "8063B053"
-    }
+    },
+    "interview_completed": true,
+    "completed_at": "2026-01-29T17:13:04.993809"
+  },
+  "B34E57A4": {
+    "id": "B34E57A4",
+    "candidate": "Candidate",
+    "questions": [
+      {
+        "category": "technical",
+        "id": 1,
+        "text": "Can you describe your experience with senior?"
+      },
+      {
+        "category": "behavioral",
+        "id": 2,
+        "text": "Tell me about your most challenging project and your specific role in it"
+      },
+      {
+        "category": "technical",
+        "id": 3,
+        "text": "How do you approach performance optimization in production applications?"
+      },
+      {
+        "category": "technical",
+        "id": 4,
+        "text": "Walk me through your typical deployment and CI/CD process"
+      },
+      {
+        "category": "behavioral",
+        "id": 5,
+        "text": "Describe a time you had to learn a new technology under pressure"
+      },
+      {
+        "category": "technical",
+        "id": 6,
+        "text": "How do you handle code reviews and collaborate with other developers?"
+      }
+    ],
+    "current_question": 0,
+    "bot_messages": [
+      {
+        "type": "greeting",
+        "text": "Hello Candidate! Welcome to your technical interview. I'm your AI interviewer today. This will take about 25 minutes. Could you please start with a brief introduction about yourself?",
+        "timestamp": "2026-01-29T17:20:25.993311",
+        "question_id": 0
+      },
+      {
+        "type": "question",
+        "question_id": 1,
+        "text": "Question 1: Can you describe your experience with senior?",
+        "timestamp": "2026-01-29T17:20:35.996966"
+      },
+      {
+        "type": "question",
+        "question_id": 2,
+        "text": "Question 2: Tell me about your most challenging project and your specific role in it",
+        "timestamp": "2026-01-29T17:21:01.002720"
+      },
+      {
+        "type": "question",
+        "question_id": 3,
+        "text": "Question 3: How do you approach performance optimization in production applications?",
+        "timestamp": "2026-01-29T17:21:26.006303"
+      },
+      {
+        "type": "question",
+        "question_id": 4,
+        "text": "Question 4: Walk me through your typical deployment and CI/CD process",
+        "timestamp": "2026-01-29T17:21:51.016686"
+      },
+      {
+        "type": "question",
+        "question_id": 5,
+        "text": "Question 5: Describe a time you had to learn a new technology under pressure",
+        "timestamp": "2026-01-29T17:22:16.025042"
+      },
+      {
+        "type": "question",
+        "question_id": 6,
+        "text": "Question 6: How do you handle code reviews and collaborate with other developers?",
+        "timestamp": "2026-01-29T17:22:41.034366"
+      },
+      {
+        "type": "closing",
+        "text": "Thank you Candidate! That's all the questions. Your interview is now complete. You'll receive feedback within 24 hours. Have a great day!",
+        "timestamp": "2026-01-29T17:23:06.040113"
+      }
+    ],
+    "candidate_responses": [
+      {
+        "question_id": 1,
+        "text": "Candidate Candidate answered Q1 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:21:00.999706"
+      },
+      {
+        "question_id": 2,
+        "text": "Candidate Candidate answered Q2 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:21:26.004749"
+      },
+      {
+        "question_id": 3,
+        "text": "Candidate Candidate answered Q3 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:21:51.008097"
+      },
+      {
+        "question_id": 4,
+        "text": "Candidate Candidate answered Q4 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:22:16.023456"
+      },
+      {
+        "question_id": 5,
+        "text": "Candidate Candidate answered Q5 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:22:41.026851"
+      },
+      {
+        "question_id": 6,
+        "text": "Candidate Candidate answered Q6 (recorded via Zoom)",
+        "timestamp": "2026-01-29T17:23:06.038533"
+      }
+    ],
+    "zoom": {
+      "meeting_id": "89691877137",
+      "join_url": "https://us05web.zoom.us/j/89691877137?pwd=E4zC9luOKPfVmh8iNKejKIS2SsJady.1",
+      "start_url": "https://us05web.zoom.us/s/89691877137?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMiIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJ3ZWIiLCJjbHQiOjAsIm1udW0iOiI4OTY5MTg3NzEzNyIsImF1ZCI6ImNsaWVudHNtIiwidWlkIjoibmlqUFJxQkJRRk9CZGhmRmU5TVp2USIsInppZCI6IjI5NDIzMjc3OTQ4YTQxZGJiMGJlNGFhMGUwMTZmN2FkIiwic2siOiIwIiwic3R5IjoxMDAsIndjZCI6InVzMDUiLCJleHAiOjE3Njk2OTQ2MjUsImlhdCI6MTc2OTY4NzQyNSwiYWlkIjoiNjlObTFlU01UV2UtcHYwYmVHUW1KZyIsImNpZCI6IiJ9.NZjmQUqcijLSu0LyIyUMMySWe2VQNfLuGWaNTeAQ9Nw",
+      "password": "g5jLC5",
+      "candidate_name": "Candidate",
+      "interview_id": "B34E57A4"
+    },
+    "interview_completed": true,
+    "completed_at": "2026-01-29T17:23:06.040113"
+  },
+  "9B8F7D8B": {
+    "id": "9B8F7D8B",
+    "candidate": "Candidate",
+    "questions": [
+      {
+        "category": "technical",
+        "id": 1,
+        "text": "Describe your senior experience"
+      },
+      {
+        "category": "behavioral",
+        "id": 2,
+        "text": "Most challenging project?"
+      },
+      {
+        "category": "technical",
+        "id": 3,
+        "text": "Performance optimization approach?"
+      },
+      {
+        "category": "technical",
+        "id": 4,
+        "text": "Your deployment process?"
+      },
+      {
+        "category": "behavioral",
+        "id": 5,
+        "text": "Quickly learned new tech?"
+      },
+      {
+        "category": "technical",
+        "id": 6,
+        "text": "Code review process?"
+      }
+    ],
+    "current_question": 0,
+    "bot_messages": [],
+    "candidate_responses": [],
+    "status": "created"
+  },
+  "0DD5F657": {
+    "id": "0DD5F657",
+    "candidate": "Vipul Jain",
+    "questions": [
+      {
+        "category": "technical",
+        "id": 1,
+        "text": "Describe your senior experience"
+      },
+      {
+        "category": "behavioral",
+        "id": 2,
+        "text": "Most challenging project?"
+      },
+      {
+        "category": "technical",
+        "id": 3,
+        "text": "Performance optimization approach?"
+      },
+      {
+        "category": "technical",
+        "id": 4,
+        "text": "Your deployment process?"
+      },
+      {
+        "category": "behavioral",
+        "id": 5,
+        "text": "Quickly learned new tech?"
+      },
+      {
+        "category": "technical",
+        "id": 6,
+        "text": "Code review process?"
+      }
+    ],
+    "current_question": 0,
+    "bot_messages": [
+      {
+        "type": "greeting",
+        "text": "Hello Vipul Jain, welcome to your AI technical interview. Please give a 30-second introduction about yourself.",
+        "timestamp": "2026-01-29T17:28:07.433883"
+      },
+      {
+        "type": "question",
+        "id": 1,
+        "text": "Question 1: Describe your senior experience",
+        "audio_file": "0DD5F657_q1.mp3",
+        "timestamp": "2026-01-29T17:28:43.919901"
+      },
+      {
+        "type": "question",
+        "id": 2,
+        "text": "Question 2: Most challenging project?",
+        "audio_file": "0DD5F657_q2.mp3",
+        "timestamp": "2026-01-29T17:29:09.232745"
+      },
+      {
+        "type": "question",
+        "id": 3,
+        "text": "Question 3: Performance optimization approach?",
+        "audio_file": "0DD5F657_q3.mp3",
+        "timestamp": "2026-01-29T17:29:34.639914"
+      },
+      {
+        "type": "question",
+        "id": 4,
+        "text": "Question 4: Your deployment process?",
+        "audio_file": "0DD5F657_q4.mp3",
+        "timestamp": "2026-01-29T17:29:59.982356"
+      },
+      {
+        "type": "question",
+        "id": 5,
+        "text": "Question 5: Quickly learned new tech?",
+        "audio_file": "0DD5F657_q5.mp3",
+        "timestamp": "2026-01-29T17:30:25.339829"
+      },
+      {
+        "type": "question",
+        "id": 6,
+        "text": "Question 6: Code review process?",
+        "audio_file": "0DD5F657_q6.mp3",
+        "timestamp": "2026-01-29T17:30:50.673278"
+      },
+      {
+        "type": "closing",
+        "text": "Thank you Vipul Jain! Interview complete. Results coming soon.",
+        "timestamp": "2026-01-29T17:31:16.280477"
+      }
+    ],
+    "candidate_responses": [
+      {
+        "question_id": 1,
+        "text": "Zoom cloud recorded response for Q1",
+        "timestamp": "2026-01-29T17:29:09.232745"
+      },
+      {
+        "question_id": 2,
+        "text": "Zoom cloud recorded response for Q2",
+        "timestamp": "2026-01-29T17:29:34.639914"
+      },
+      {
+        "question_id": 3,
+        "text": "Zoom cloud recorded response for Q3",
+        "timestamp": "2026-01-29T17:29:59.982356"
+      },
+      {
+        "question_id": 4,
+        "text": "Zoom cloud recorded response for Q4",
+        "timestamp": "2026-01-29T17:30:25.339723"
+      },
+      {
+        "question_id": 5,
+        "text": "Zoom cloud recorded response for Q5",
+        "timestamp": "2026-01-29T17:30:50.673278"
+      },
+      {
+        "question_id": 6,
+        "text": "Zoom cloud recorded response for Q6",
+        "timestamp": "2026-01-29T17:31:16.280134"
+      }
+    ],
+    "status": "completed",
+    "zoom": {
+      "meeting_id": "89065450339",
+      "join_url": "https://us05web.zoom.us/j/89065450339?pwd=a8N1RCfbXpo8Rf5xHSLcttqqoEhaOh.1",
+      "password": "nyk2JX",
+      "candidate_name": "Vipul Jain",
+      "interview_id": "0DD5F657",
+      "recording": "cloud_auto_started"
+    },
+    "completed_at": "2026-01-29T17:31:17.002728"
+  },
+  "2F9D8ACF": {
+    "id": "2F9D8ACF",
+    "candidate": "Live Candidate",
+    "job_desc": "Senior React Developer - 3+ years experience\n\u2022 TypeScript, Next.js, React 18+\n\u2022 Deployment (Vercel/AWS), CI/CD\n\u2022 Performance optimization\n\u2022 Team collaboration, code reviews",
+    "skills": "ROR Developer",
+    "questions": [
+      {
+        "id": 1,
+        "text": "Tell me about your experience with this role's core technologies",
+        "category": "technical"
+      },
+      {
+        "id": 2,
+        "text": "Describe your most challenging project and your role in it",
+        "category": "behavioral"
+      },
+      {
+        "id": 3,
+        "text": "How do you optimize application performance?",
+        "category": "technical"
+      },
+      {
+        "id": 4,
+        "text": "Walk through your deployment process",
+        "category": "technical"
+      },
+      {
+        "id": 5,
+        "text": "Time you learned new technology quickly?",
+        "category": "behavioral"
+      },
+      {
+        "id": 6,
+        "text": "How do you handle code reviews?",
+        "category": "technical"
+      }
+    ],
+    "status": "active",
+    "created_at": "2026-01-29T17:37:34.790369",
+    "zoom": {
+      "join_url": "https://us05web.zoom.us/j/83488569442?pwd=4Qlzhbtw7bLbFMK09Se475aBDiy6U0.1",
+      "meeting_id": 83488569442
+    },
+    "bot_messages": [
+      {
+        "role": "ai",
+        "text": "Hello Live Candidate! Welcome to your AI technical interview. I'm your interviewer today. Please start with a 1-minute introduction about yourself.",
+        "timestamp": "2026-01-29T17:37:35.701476"
+      },
+      {
+        "role": "ai",
+        "text": "Question 1: Tell me about your experience with this role's core technologies",
+        "timestamp": "2026-01-29T17:38:40.707346"
+      },
+      {
+        "role": "ai",
+        "text": "Question 2: Describe your most challenging project and your role in it",
+        "timestamp": "2026-01-29T17:39:25.713057"
+      }
+    ],
+    "candidate_transcripts": [
+      {
+        "question": 0,
+        "transcript": "Candidate introduction recorded via Zoom"
+      },
+      {
+        "question": 1,
+        "transcript": "Candidate answered Q1 (transcribed from Zoom audio)"
+      }
+    ],
+    "evaluations": [
+      {
+        "question": 1,
+        "evaluation": "No AI response available"
+      }
+    ]
   }
 }
