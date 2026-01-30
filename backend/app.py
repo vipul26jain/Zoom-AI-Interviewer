@@ -253,7 +253,7 @@ def create_zoom_meeting(interview_id, candidate_name):
                 "type": "audio_transcript_video"  # Video + Transcript
             }
         }
-    }
+    } 
     
     try:
         print(f"📹 Creating Zoom meeting for {candidate_name}...")
