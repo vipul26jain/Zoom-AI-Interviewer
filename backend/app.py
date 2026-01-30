@@ -263,76 +263,76 @@ def create_zoom_meeting(interview_id, candidate_name):
         
         if response.status_code == 201:
             meeting = response.json()
-            zoom_info = {
-                "meeting_id": str(meeting.get("id", "")),
-                "join_url": meeting.get("join_url", ""),
-                "start_url": meeting.get("start_url", ""),  # For AI bot
-                "password": meeting.get("password", ""),
-                "candidate_name": candidate_name,
-                "interview_id": interview_id,
-                "recording_active": True,
-                "transcript_enabled": True
-            }
             # zoom_info = {
             #     "meeting_id": str(meeting.get("id", "")),
-            #     "join_url": meeting.get("join_url", ""),                    # Candidate joins here
-            #     "start_url": meeting.get("start_url", ""),                  # AI bot auto-starts meeting
+            #     "join_url": meeting.get("join_url", ""),
+            #     "start_url": meeting.get("start_url", ""),  # For AI bot
             #     "password": meeting.get("password", ""),
             #     "candidate_name": candidate_name,
             #     "interview_id": interview_id,
-                
-            #     # AI Bot Configuration
-            #     "ai_bot_config": {
-            #         "bot_name": f"AI_Interviewer_{interview_id}",
-            #         "bot_role": "interviewer",
-            #         "auto_join": True,
-            #         "auto_start_meeting": True,
-            #         "interview_script_id": interview_id,
-            #         "llm_model": "gpt-4o",  # or grok, gemini
-            #         "max_questions": 15
-            #     },
-                
-            #     # Recording Settings (Cloud + Local)
             #     "recording_active": True,
-            #     "recording_config": {
-            #         "cloud_recording": True,
-            #         "local_recording": False,
-            #         "auto_start_recording": True,
-            #         "recording_layout": "speaker_view",
-            #         "file_retention_days": 90
-            #     },
-                
-            #     # Transcription Settings
-            #     "transcript_enabled": True,
-            #     "transcription_config": {
-            #         "auto_transcribe": True,
-            #         "language": "en-US",
-            #         "speaker_identification": True,
-            #         "real_time_transcript": True,
-            #         "diarization": True,  # Separate speakers (AI vs Candidate)
-            #         "custom_vocabulary": [candidate_name, "resume", "experience"],  # Boost accuracy
-            #         "output_formats": ["txt", "srt", "json"]
-            #     },
-                
-            #     # Interview Automation
-            #     "interview_automation": {
-            #         "duration_minutes": 30,
-            #         "auto_end_meeting": True,
-            #         "questions_per_minute": 2,
-            #         "skill_assessment": True,
-            #         "sentiment_analysis": True
-            #     },
-                
-            #     # Zoom Meeting Settings
-            #     "meeting_settings": {
-            #         "host_video": False,  # AI bot controls video
-            #         "participant_video": True,
-            #         "audio_enabled": True,
-            #         "mute_participants_on_entry": False,
-            #         "waiting_room": False,  # Direct entry for AI automation
-            #         "meeting_type": "scheduled"
-            #     }
+            #     "transcript_enabled": True
             # }
+            zoom_info = {
+                "meeting_id": str(meeting.get("id", "")),
+                "join_url": meeting.get("join_url", ""),                    # Candidate joins here
+                "start_url": meeting.get("start_url", ""),                  # AI bot auto-starts meeting
+                "password": meeting.get("password", ""),
+                "candidate_name": candidate_name,
+                "interview_id": interview_id,
+                
+                # AI Bot Configuration
+                "ai_bot_config": {
+                    "bot_name": f"AI_Interviewer_{interview_id}",
+                    "bot_role": "interviewer",
+                    "auto_join": True,
+                    "auto_start_meeting": True,
+                    "interview_script_id": interview_id,
+                    "llm_model": "gpt-4o",  # or grok, gemini
+                    "max_questions": 15
+                },
+                
+                # Recording Settings (Cloud + Local)
+                "recording_active": True,
+                "recording_config": {
+                    "cloud_recording": True,
+                    "local_recording": False,
+                    "auto_start_recording": True,
+                    "recording_layout": "speaker_view",
+                    "file_retention_days": 90
+                },
+                
+                # Transcription Settings
+                "transcript_enabled": True,
+                "transcription_config": {
+                    "auto_transcribe": True,
+                    "language": "en-US",
+                    "speaker_identification": True,
+                    "real_time_transcript": True,
+                    "diarization": True,  # Separate speakers (AI vs Candidate)
+                    "custom_vocabulary": [candidate_name, "resume", "experience"],  # Boost accuracy
+                    "output_formats": ["txt", "srt", "json"]
+                },
+                
+                # Interview Automation
+                "interview_automation": {
+                    "duration_minutes": 30,
+                    "auto_end_meeting": True,
+                    "questions_per_minute": 2,
+                    "skill_assessment": True,
+                    "sentiment_analysis": True
+                },
+                
+                # Zoom Meeting Settings
+                "meeting_settings": {
+                    "host_video": False,  # AI bot controls video
+                    "participant_video": True,
+                    "audio_enabled": True,
+                    "mute_participants_on_entry": False,
+                    "waiting_room": False,  # Direct entry for AI automation
+                    "meeting_type": "scheduled"
+                }
+            }
 
             
             # Save to session
