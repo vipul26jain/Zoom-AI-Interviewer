@@ -64,9 +64,9 @@ def safe_groq_call(prompt):
 def index():
     return send_from_directory("static", "index.html")
 
-@app.route("/ai-interviewer")
+@app.route("/ai_interviewer")
 def ai_interviewer():
-    return send_from_directory("static", "ai-interviewer.html")
+    return send_from_directory("static", "ai_interviewer.html")
 
 # -------------------- QUESTIONS --------------------
 @app.route("/api/generate-questions", methods=["POST"])
