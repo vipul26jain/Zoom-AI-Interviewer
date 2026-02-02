@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>AI Interviewer</title>
+
+  <!-- Zoom Web SDK -->
+  <script src="https://source.zoom.us/3.6.1/lib/vendor/react.min.js"></script>
+  <script src="https://source.zoom.us/3.6.1/lib/vendor/react-dom.min.js"></script>
+  <script src="https://source.zoom.us/3.6.1/zoom-meeting-embedded-3.6.1.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #0f172a;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    #zoom-root {
+      width: 100vw;
+      height: 100vh;
+    }
+    #status {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.6);
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="zoom-root"></div>
+  <div id="status">🤖 Initializing AI Interviewer…</div>
+
+<script>
+/* -------------------- HELPERS -------------------- */
+const qs = new URLSearchParams(window.location.search);
+const INTERVIEW_ID = qs.get("interview");
+const MEETING_NUMBER = qs.get("mn");
+const PASSWORD = qs.get("pwd");
+
+const statusEl = document.getElementById("status");
+
+function setStatus(text) {
+  statusEl.textContent = text;
+  console.log(text);
+}
+
+/* -------------------- TEXT TO SPEECH -------------------- */
+function speak(text) {
+  return new Promise(resolve => {
+    setStatus("🤖 Asking question…");
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.rate = 0.95;
+    utterance.onend = resolve;
+    speechSynthesis.speak(utterance);
+  });
+}
+
+/* -------------------- SPEECH TO TEXT -------------------- */
+let recognition;
+let listening = false;
+
+function startListening() {
+  if (!('webkitSpeechRecognition' in window)) {
+    alert("Speech recognition not supported in this browser.");
+    return;
+  }
+
+  recognition = new webkitSpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = false;
+  recognition.lang = "en-US";
+
+  recognition.onstart = () => {
+    listening = true;
+    setStatus("🎧 Listening to candidate…");
+  };
+
+  recognition.onresult = async (event) => {
+    const transcript =
+      event.results[event.results.length - 1][0].transcript;
+
+    recognition.stop();
+    listening = false;
+
+    setStatus("📨 Sending answer to AI…");
+
+    const res = await fetch(`/api/ai/next-question/${INTERVIEW_ID}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ answer: transcript })
+    });
+
+    const data = await res.json();
+
+    if (data.done) {
+      await speak("Thank you. The interview is now complete.");
+      setStatus("✅ Interview completed");
+    } else {
+      await speak(data.question);
+      startListening();
+    }
+  };
+
+  recognition.onerror = (e) => {
+    console.error(e);
+    setStatus("⚠️ Speech recognition error");
+  };
+
+  recognition.start();
+}
+
+/* -------------------- ZOOM JOIN -------------------- */
+async function joinZoom() {
+  setStatus("🔐 Getting Zoom signature…");
+
+  const sigRes = await fetch("/api/zoom-signature", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ meetingNumber: MEETING_NUMBER })
+  });
+
+  const { signature } = await sigRes.json();
+
+  const client = ZoomMtgEmbedded.createClient();
+
+  await client.init({
+    zoomAppRoot: document.getElementById("zoom-root"),
+    language: "en-US"
+  });
+
+  setStatus("📹 Joining Zoom meeting…");
+
+  await client.join({
+    sdkKey: "YOUR_ZOOM_SDK_KEY",   // same key as backend env
+    signature,
+    meetingNumber: MEETING_NUMBER,
+    password: PASSWORD,
+    userName: "🤖 AI Interviewer"
+  });
+
+  setStatus("✅ AI Interviewer joined");
+
+  // Start interview after short delay
+  setTimeout(startInterview, 3000);
+}
+
+/* -------------------- INTERVIEW FLOW -------------------- */
+async function startInterview() {
+  setStatus("🚀 Starting interview…");
+
+  const res = await fetch(`/api/ai/next-question/${INTERVIEW_ID}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ answer: "" })
+  });
+
+  const data = await res.json();
+
+  if (!data.done) {
+    await speak(
+      "Hello. I am your AI interviewer. Let's begin. " + data.question
+    );
+    startListening();
+  }
+}
+
+/* -------------------- BOOT -------------------- */
+joinZoom();
+</script>
+
+</body>
+</html>
